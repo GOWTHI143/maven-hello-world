@@ -27,5 +27,16 @@ pipeline{
                 }
             }
         }
+        stage('build image'){
+            steps{
+                script{
+                    withCredentials([usernamePassword(credentialsId: 'Docker', passwordVariable: 'dcoker_pass', usernameVariable: 'docker_user')]) {
+                    sh """ docker image build -t ${env.REPO_URL}/mvn-hello:${env.BUILD_NUMBER}
+                        docker image push ${env.REPO_URL}/mvn-hello:${env.BUILD_NUMBER} """
+                    }
+                }
+            }
+        }
+
     }
 }
