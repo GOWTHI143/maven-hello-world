@@ -36,9 +36,9 @@ pipeline{
             }
         }
         stage('Pushing image') {
-           script{
-                    withCredentials([usernamePassword(credentialsId: 'Docker', passwordVariable: 'dcoker_pass', usernameVariable: 'docker_user')]) {
-                    sh """ docker login --u ${docker_user} --p ${dcoker_pass}"""}
+        //    script{
+                    // withCredentials([usernamePassword(credentialsId: 'Docker', passwordVariable: 'dcoker_pass', usernameVariable: 'docker_user')]) {
+                    sh "echo ${dcoker_pass} | docker login --u ${docker_user} --password-stdin"
             steps{
                 sh"docker image push ${env.REPO_URL}/mvn-hello:${env.BUILD_NUMBER}"
             }       
