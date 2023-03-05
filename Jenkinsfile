@@ -4,6 +4,7 @@ pipeline{
     options { buildDiscarder(logRotator(numToKeepStr: '10'))}
     environment{
         REPO_URL="gowthi1404"} /*dockerhub reponame*/
+    
     stages{
         stage('vcs') {
             steps{
@@ -12,8 +13,8 @@ pipeline{
             }
         }
         stage('build'){
+            tools{jdk 'JAVA8'}
             steps{
-                tools{jdk 'JAVA8'}
                 sh"mvn package"
             }
         }
