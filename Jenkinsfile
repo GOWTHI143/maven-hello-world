@@ -36,12 +36,11 @@ pipeline{
             }
         }
         stage('Pushing image') {
-        //    script{
-                    // withCredentials([usernamePassword(credentialsId: 'Docker', passwordVariable: 'dcoker_pass', usernameVariable: 'docker_user')]) {
-                    // sh "echo ${dcoker_pass} | docker login --u ${docker_user} --password-stdin"
-            steps{
-                sh"""echo ${dcokerhub_PSW} | docker login --u ${docker_user} --password-stdin
-                docker image push ${env.REPO_URL}/mvn-hello:${env.BUILD_NUMBER}"""
+           script{
+                    withCredentials([usernamePassword(credentialsId: 'Docker', passwordVariable: 'docker_pass', usernameVariable: 'docker_user')]) {
+                    sh "docker login -u=${docker_user} -p=${docker_pass}"
+}}
+                sh"""docker image push ${env.REPO_URL}/mvn-hello:${env.BUILD_NUMBER}"""
             }       
         }
     }
