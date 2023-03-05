@@ -38,7 +38,7 @@ pipeline{
         stage('Pushing image') {
            script{
                     withCredentials([usernamePassword(credentialsId: 'Docker', passwordVariable: 'dcoker_pass', usernameVariable: 'docker_user')]) {
-                    sh """ docker login --u ${docker_user} --p ${dcoker_pass}"""
+                    sh """ docker login --u ${docker_user} --p ${dcoker_pass}"""}
             steps{
                 sh"docker image push ${env.REPO_URL}/mvn-hello:${env.BUILD_NUMBER}"
             }       
