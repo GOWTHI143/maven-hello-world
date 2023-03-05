@@ -15,13 +15,15 @@ pipeline{
         stage('build'){
             tools{jdk 'JAVA8'}
             steps{
-                sh"my-app/mvn package"
+                sh"""cd my-app
+                    mvn package"""
             }
         }
         stage('sonar_scan') {
              steps{
                 withSonarQubeEnv('SONAR') {
-                    sh " my-app/mvn package sonar:sonar"
+                    sh """ cd my-app
+                    mvn package sonar:sonar"""
                 }
             }
         }
