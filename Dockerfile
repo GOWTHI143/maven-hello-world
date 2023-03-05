@@ -6,5 +6,5 @@
 FROM openjdk:8 
 LABEL project="simplemavenm-project"
 LABEL maintainer="name"
-COPY ./QA/my-app/target/my-app-1.0-SNAPSHOT.jar .
+COPY /var/lib/jenkins/workspace/QA/my-app/target/my-app-1.0-SNAPSHOT.jar .
 CMD [ "java", "-jar", "my-app-1.0-SNAPSHOT.jar" ]
