@@ -6,5 +6,5 @@ RUN git clone https://github.com/GOWTHI143/maven-hello-world.git &&\
 FROM openjdk:8 
 LABEL project="simplemavenm-project"
 LABEL maintainer="name"
-COPY --from=build ./my-app/target/my-app-1.0-SNAPSHOT.jar my-app-1.0-SNAPSHOT.jar
+COPY --from=build /maven-hello-world/my-app/target/my-app-1.0-SNAPSHOT.jar my-app-1.0-SNAPSHOT.jar
 CMD [ "java", "-jar", "my-app-1.0-SNAPSHOT.jar" ]
