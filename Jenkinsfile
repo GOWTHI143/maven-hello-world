@@ -3,8 +3,8 @@ pipeline {
     triggers { cron('0 * * * *') }
     options { buildDiscarder(logRotator(numToKeepStr: '10')) }
     environment {
-        REPO_URL = 'gowthi1404'
-        dockerhub = credentials('Docker')} /*dockerhub reponame*/
+        REPO_URL = 'gowthi1404'}
+        // dockerhub = credentials('Docker')} /*dockerhub reponame*/
     stages {
         stage('vcs') {
             steps {
