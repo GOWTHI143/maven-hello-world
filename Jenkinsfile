@@ -8,7 +8,7 @@ pipeline {
         stage('vcs') {
             steps {
                 git url:'https://github.com/GOWTHI143/maven-hello-world.git',
-                branch:'qa'
+                branch:'dev'
             }
         }
         stage('build') {
@@ -29,7 +29,7 @@ pipeline {
         stage('build image') {
             steps {
                 script {
-                    sh """ docker image build -t ${env.REPO_URL}/qa-mvn-hello:${env.BUILD_NUMBER} .
+                    sh """ docker image build -t ${env.REPO_URL}/dev-mvn-hello:${env.BUILD_NUMBER} .
                     """
                 }
             }
@@ -39,7 +39,7 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'Docker', passwordVariable: 'docker_pass', usernameVariable: 'docker_user')]) {
                     sh "docker login -u=${docker_user} -p=${docker_pass}" } }
-                    sh"""docker image push ${env.REPO_URL}/qa-mvn-hello:${env.BUILD_NUMBER}"""
+                    sh"""docker image push ${env.REPO_URL}/dev-mvn-hello:${env.BUILD_NUMBER}"""
                 }
             }
         }
