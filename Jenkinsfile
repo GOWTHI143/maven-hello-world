@@ -31,11 +31,14 @@ pipeline{
             steps{
                 script{
                     sh """ docker image build -t ${env.REPO_URL}/mvn-hello:${env.BUILD_NUMBER} .
-                    """
+                    docker login --"""
                 }
             }
         }
         stage('Pushing image') {
+           script{
+                    withCredentials([usernamePassword(credentialsId: 'Docker', passwordVariable: 'dcoker_pass', usernameVariable: 'docker_user')]) {
+                    sh """ docker login --u ${docker_user} --p ${dcoker_pass}"""
             steps{
                 sh"docker image push ${env.REPO_URL}/mvn-hello:${env.BUILD_NUMBER}"
             }       
