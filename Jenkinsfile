@@ -2,9 +2,9 @@ pipeline{
     agent any
     triggers { cron('0 * * * *')}
     options { buildDiscarder(logRotator(numToKeepStr: '10'))}
-    environment{
-        REPO_URL="gowthi1404"} /*dockerhub reponame*/
-    
+    environment {
+        REPO_URL="gowthi1404"
+        dockerhub=credentials('Docker')} /*dockerhub reponame*/
     stages{
         stage('vcs') {
             steps{
@@ -25,18 +25,20 @@ pipeline{
                     sh """ cd my-app
                     mvn package sonar:sonar"""
                 }
-            }
+             }
         }
         stage('build image'){
             steps{
                 script{
-                    withCredentials([usernamePassword(credentialsId: 'Docker', passwordVariable: 'dcoker_pass', usernameVariable: 'docker_user')]) {
                     sh """ docker image build -t ${env.REPO_URL}/mvn-hello:${env.BUILD_NUMBER} .
-                        docker image push ${env.REPO_URL}/mvn-hello:${env.BUILD_NUMBER} """
-                    }
+                    """
                 }
             }
         }
-
+        stage('Pushing image') {
+            steps{
+                sh"docker image push ${env.REPO_URL}/mvn-hello:${env.BUILD_NUMBER}"
+            }       
+        }
     }
 }
